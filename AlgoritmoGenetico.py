@@ -36,12 +36,8 @@ def rodeio(lista_individuos): ## Realiza o rodeio, escolhendo 2 individuos e dev
     for individuo in lista_individuos: ## Cria uma roleta com base na porcentagem destinada a cada individuo, ou porção destinada da roleta ao individuo
         for i in range(individuo[2]):
             roleta.append(individuo[:2])
-    escolha_1 = -1
-    escolha_2 = -1
-    while escolha_1 == -1: ## Seleciona um individuo
-        escolha_1 = random.choice(roleta)
-    while escolha_2 == -1: ## Seleciona um individuo
-        escolha_2 = random.choice(roleta)
+    escolha_1 = random.choice(roleta) ## Seleciona um individuo
+    escolha_2 = random.choice(roleta) ## Seleciona um individuo
     return escolha_1[0].copy() if escolha_1[1] > escolha_2[1] else escolha_2[0].copy() ## Devolve o individuo mais bem adaptado dos individuos selecionados
 
 def verifica_valor(valor_bin, menor = menor, maior = maior): ## Verifica se o valor não extrapolou os limites
