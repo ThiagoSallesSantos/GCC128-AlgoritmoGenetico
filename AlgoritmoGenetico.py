@@ -1,16 +1,18 @@
 import matplotlib.pyplot as plt
-import numpy as np
 import random
 import math
 import os
 
-## Valores de configuração:
+# random.seed(7) ## Set de seed do random, para realizar repetição de teste
+
+## Valores de configuração
 menor = -10
 maior = 10
 qtd_populacao = 5
 qtd_individuos = 4
 porct_crossover = 0.7
 porct_mutacao = 0.01
+qtd_elementos_roleta = 10 ## Configuração adicional para definir a quantidade de elementos na roleta
 #################################
 
 clearCommand = 'cls' if os.name == 'nt' else 'clear' ## Pega comando correto para limpar a saída do prompt, verificando de qual sistema operacional o código está sendo executado
@@ -86,7 +88,7 @@ def imprimi(lista_individuos): ## Imprimi informações dos individuos presente 
     print("###########################################################################")
 
 def exibi_grafico(maior, menor, lista_individuos, geracao): ## Exibi o gráfico
-    variaveis = np.arange(menor, maior+1, 1) ## Pega todos os possiveis valores inteiros dentro do intervalo
+    variaveis = [x for x in range(menor, maior+1, 1)] ## Pega todos os possiveis valores inteiros dentro do intervalo
     plt.plot(variaveis, [fitness(x) for x in variaveis]) ## Plot: desenho da função
     ## Pega os individuos da geração
     lista_aux = [x[0] for x in lista_individuos] if len(lista_individuos[0]) == 3 else lista_individuos
@@ -109,7 +111,7 @@ if __name__ == "__main__":
         for index, individuo in enumerate(lista_individuos): ## Realiza o fitness dos individuos da geração
             lista_individuos[index] = [individuo, fitness(convert_int(individuo))]
             somatorio_resultados += lista_individuos[index][1]
-        lista_individuos = [[x[0], x[1], round((x[1]/ somatorio_resultados)*10)] for x in lista_individuos]
+        lista_individuos = [[x[0], x[1], round((x[1]/ somatorio_resultados)*qtd_elementos_roleta)] for x in lista_individuos]
         imprimi(lista_individuos)
         exibi_grafico(maior, menor, lista_individuos, geracao)
         print("Gerando nova população:")
